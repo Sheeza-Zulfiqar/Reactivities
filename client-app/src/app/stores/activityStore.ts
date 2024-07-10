@@ -20,6 +20,15 @@ export default class ActivityStore {
     );
 
     }
+    get groupedActivities(){
+        return Object.entries(
+            this.activitiesByDate.reduce((activities,activity)=>{
+                const date=activity.date;
+                activities[date]=activities[date] ? [...activities[date],activity] : [activity];
+                return activities;
+            },{}as {[key:string]: Activity[]})
+        )
+    }
     //using arrow function will automatically binds this function to the class, else explicity need to bind this loadActivities method to this class
     //action
     loadActivities = async () => {
